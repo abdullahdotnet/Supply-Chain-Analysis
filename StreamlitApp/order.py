@@ -10,8 +10,16 @@ import numpy as np
 def daywiseorder(df):
     
     st.title('Weekday wise order')
-    df['order_weekday'] = df['order_date'].dt.day_name()
+    
     orderdaywise = df.groupby('order_weekday')['order_id'].count().reset_index()
+    weekday_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+# Create a categorical type with the custom order
+    orderdaywise['order_weekday'] = pd.Categorical(orderdaywise['order_weekday'], categories=weekday_order, ordered=True)
+
+# Sort based on the custom order
+    orderdaywise = orderdaywise.sort_values('order_weekday').reset_index(drop=True)
+
     orderdaywise.rename( columns = {'order_id':'No. of Orders','order_weekday':'Day'},inplace = True)
     show_plot_12 = st.checkbox('Show Plot          ')
 
@@ -73,3 +81,66 @@ def shippingmode(df):
 
 
         st.table(shippingmode)
+
+def averageshippingdelay(df):
+    average_duration = df.groupby('shipping_mode')['shipping_duration'].mean().reset_index()
+    st.title("Average Shipping Duration by Shipping Mode")
+
+    with st.container():
+        cols = st.columns(2)  # Create 2 columns
+
+        # Loop through each shipping mode and display it as a card
+        for index, row in average_duration.iterrows():
+            shipping_mode = row['shipping_mode']
+            avg_duration = row['shipping_duration']
+            
+            # Determine which column to place the card in
+            col_index = index % 2
+            with cols[col_index]:
+                st.markdown(
+                    f"""
+                    <div style="background-color:#f0f2f6; padding:20px; border-radius:10px; margin-bottom:20px;">
+                        <h3 style="color:#333;">{shipping_mode}</h3>
+                        <p style="font-size:24px; font-weight:bold; color:#4CAF50;">{avg_duration:.2f} days</p>
+                    </div>
+                    """, 
+                    unsafe_allow_html=True
+                )
+
+def shipdurationdistribution(df):
+
+    st.title('Ship Duration Distribution')
+    fig = px.histogram(df, x='shipping_duration', nbins=6, 
+                   title='Shipping Duration Distribution',
+                   labels={'shipping_duration': 'Shipping Duration (days)'},
+                   color_discrete_sequence=['skyblue'])
+
+    fig.update_layout(
+        xaxis_title='Shipping Duration (days)',
+        yaxis_title='Frequency',
+        bargap=0.2, 
+        paper_bgcolor='white', 
+        plot_bgcolor='white' 
+    )
+
+    st.plotly_chart(fig)
+
+
+def shipdurationbymode(df):
+    fig = px.box(df, x='shipping_mode', y='shipping_duration',
+             title='Shipping Duration by Shipping Mode',
+             labels={'shipping_duration': 'Shipping Duration (days)', 'shipping_mode': 'Shipping Mode'},
+             color='shipping_mode')
+
+# Customize the layout for better appearance
+    fig.update_layout(
+        xaxis_title='Shipping Mode',
+        yaxis_title='Shipping Duration (days)',
+        paper_bgcolor='white',  # Background color of the plot area
+        plot_bgcolor='white'    # Background color of the plotting area
+    )
+
+
+    st.plotly_chart(fig)
+
+

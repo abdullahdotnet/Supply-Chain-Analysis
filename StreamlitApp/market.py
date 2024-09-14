@@ -109,3 +109,43 @@ def marketwisetrend(df):
     # Display the plot using Streamlit
     st.plotly_chart(fig_line_plot)
 
+def marketduration(df):
+    marketwiseduration = df.groupby('market')['shipping_duration'].mean().reset_index()
+    st.title("Average Shipping Duration by Market")
+
+# Loop through each market and display a card for each
+    if not marketwiseduration.empty:
+        first_row = marketwiseduration.iloc[0]
+        st.markdown(
+            f"""
+            <div style="background-color:#f0f2f6; padding:20px; border-radius:10px; margin-bottom:20px; text-align:center; box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);">
+                <h3 style="color:#333;">{first_row['market']}</h3>
+                <p style="font-size:24px; font-weight:bold; color:#2196f3;">{first_row['shipping_duration']:.2f} days</p>
+                <p style="color:#555;">Average Shipping Duration</p>
+            </div>
+            """, 
+            unsafe_allow_html=True
+        )
+
+# Display the remaining cards in rows of 2
+    remaining_rows = marketwiseduration.iloc[1:]
+
+    for i in range(0, len(remaining_rows), 2):
+        cols = st.columns(2)  # Create a row with 2 columns
+        for j in range(2):
+            if i + j < len(remaining_rows):
+                row = remaining_rows.iloc[i + j]
+                market = row['market']
+                avg_duration = row['shipping_duration']
+                
+                # Add card to the current column
+                cols[j].markdown(
+                    f"""
+                    <div style="background-color:#f0f2f6; padding:20px; border-radius:10px; margin-bottom:20px; text-align:center; box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);">
+                        <h3 style="color:#333;">{market}</h3>
+                        <p style="font-size:24px; font-weight:bold; color:#2196f3;">{avg_duration:.2f} days</p>
+                        <p style="color:#555;">Average Shipping Duration</p>
+                    </div>
+                    """, 
+                    unsafe_allow_html=True
+                )

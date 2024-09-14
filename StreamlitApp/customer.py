@@ -23,7 +23,7 @@ def get_citywise(df):
         page_size = 10
         total_pages = (len(city_wise_customer) // page_size) + 1
 
-        page = st.selectbox('Select page', range(1, total_pages + 1))
+        page = st.selectbox('Select page    ', range(1, total_pages + 1))
 
         start_idx = (page - 1) * page_size
         end_idx = start_idx + page_size
@@ -43,7 +43,7 @@ def get_citywise(df):
         page_size = 10
         total_pages = (len(city_wise_customer) // page_size) + 1
 
-        page = st.selectbox('Select page', range(1, total_pages + 1))
+        page = st.selectbox('Select page   ', range(1, total_pages + 1))
 
         start_idx = (page - 1) * page_size
         end_idx = start_idx + page_size
@@ -101,7 +101,7 @@ def get_countrywise(df):
         page_size = 10
         total_pages = (len(country_wise_customer) // page_size) + 1
 
-        page = st.selectbox('Select page', range(1, total_pages + 1))
+        page = st.selectbox('Select page ', range(1, total_pages + 1))
 
         start_idx = (page - 1) * page_size
         end_idx = start_idx + page_size
@@ -145,7 +145,7 @@ def get_Statewise(df):
         page_size = 10
         total_pages = (len(state_wise_customer) // page_size) + 1
 
-        page = st.selectbox('Select page', range(1, total_pages + 1))
+        page = st.selectbox('Select page  ', range(1, total_pages + 1))
 
         start_idx = (page - 1) * page_size
         end_idx = start_idx + page_size
@@ -162,7 +162,7 @@ def get_segmentwise(df):
 
 
     st.title('Segment wise Cutomers')
-    show_plot_2 = st.checkbox('Show Plot    ')
+    show_plot_2 = st.checkbox('Show Plot    ',value=True)
 
 
     if show_plot_2:

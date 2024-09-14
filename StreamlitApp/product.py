@@ -92,20 +92,61 @@ def discountVsSales(df):
     
     st.plotly_chart(fig_line)
 
-def producPriceProfit(df):
-    st.title('Product Price vs Profit')
-    df = df[['order_profit_per_order','product_price']]
-    df = df[df['order_profit_per_order'] > 0]
+# def producPriceProfit(df):
+#     st.title('Product Price vs Profit')
+#     df = df[['order_profit_per_order','product_price']]
+#     df = df[df['order_profit_per_order'] > 0]
 
-    # Create a scatter plot with Plotly
-    fig_scatter = px.scatter(df, 
-                             x='product_price', 
-                             y='order_profit_per_order', 
-                             title='Order Profit per Order vs Product Price',
-                             labels={'product_price': 'Product Price', 'order_profit_per_order': 'Order Profit per Order'},
-                            #  size='order_profit_per_order',  # Optional: Bubble size based on order profit
-                            #  color='product_price',          # Optional: Color based on product price
-                             hover_name='product_price')      # Tooltip will show product price
+#     # Create a scatter plot with Plotly
+#     fig_scatter = px.scatter(df, 
+#                              x='product_price', 
+#                              y='order_profit_per_order', 
+#                              title='Order Profit per Order vs Product Price',
+#                              labels={'product_price': 'Product Price', 'order_profit_per_order': 'Order Profit per Order'},
+#                             #  size='order_profit_per_order',  # Optional: Bubble size based on order profit
+#                             #  color='product_price',          # Optional: Color based on product price
+#                              hover_name='product_price')      # Tooltip will show product price
 
-    # Display the plot in the Streamlit app
-    st.plotly_chart(fig_scatter)
+#     # Display the plot in the Streamlit app
+#     st.plotly_chart(fig_scatter)
+
+
+
+def priceprofit(df):
+    correlation = df['product_price'].corr(df['product_profit'])
+
+    st.title("Correlation Analysis")
+
+
+    st.markdown(
+        f"""
+        <div style="background-color:#f0f2f6; padding:20px; border-radius:10px; margin-bottom:20px; text-align:center;">
+            <h3 style="color:#4caf50;">Correlation Coefficient</h3>
+            <p style="font-size:36px; font-weight:bold; color:#2196f3;">{correlation:.2f}</p>
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
+
+    st.subheader("Scatter Plot of Product Price vs Order Profit")
+    st.write("This scatter plot shows the relationship between product price and order profit per order.")
+
+
+    fig = px.scatter(df, x='product_price', y='product_profit', 
+                     title='Scatter Plot of Product Price vs Order Profit per Order',
+                     labels={'product_price': 'Product Price', 'product_profit': 'Order Profit per Order'},
+                     template="plotly_white",
+                     )
+    
+    # Customize the layout for better readability
+    fig.update_layout(
+        title={'x': 0.5},  # Center the title
+        xaxis_title='Product Price',
+        yaxis_title='Order Profit per Order',
+        showlegend=False,
+        plot_bgcolor='rgba(0,0,0,0)',  # Transparent background
+        xaxis=dict(showgrid=True, gridcolor='lightgray'),
+        yaxis=dict(showgrid=True, gridcolor='lightgray')
+    )
+
+    st.plotly_chart(fig)
