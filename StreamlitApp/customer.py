@@ -154,19 +154,17 @@ def get_Statewise(df):
 
 
 def get_segmentwise(df):
-
     segment_wise_customer = df.groupby('customer_segment')['customer_id'].count().reset_index().sort_values(by='customer_id', ascending=False)
     segment_wise_customer.rename(columns={'customer_segment': 'Segment', 'customer_id': 'No. of Customers'}, inplace=True)
-
     segment_wise_customer.reset_index(drop=True, inplace=True)
 
 
-    st.title('Segment wise Cutomers')
+    st.subheader('Segment wise Cutomers')
     show_plot_2 = st.checkbox('Show Plot    ',value=True)
 
 
     if show_plot_2:
-        fig = px.pie(segment_wise_customer, names='Segment', values='No. of Customers', title='Number of Customers by Segment',hole=0.4)
+        fig = px.pie(segment_wise_customer, names='Segment', values='No. of Customers', hole=0.4)
         st.plotly_chart(fig)
 
     else:

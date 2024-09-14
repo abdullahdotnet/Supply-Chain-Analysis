@@ -19,10 +19,14 @@ usermenu = st.sidebar.radio('Filters',('Summary','Customer','Market','Order','Pr
 
 if usermenu == 'Summary':
     sm.overallcards(df)
+    sm.orderStatusCount(df)
+    sm.salesTrend(df)
+    sm.productPriceByShippingMode(df)
     sm.getSummary(df)
     
     
 if usermenu == 'Customer':
+    st.title("Customers Analysis")
     cs.get_segmentwise(df)
     cs.get_citywise(df)
     cs.get_countrywise(df)
