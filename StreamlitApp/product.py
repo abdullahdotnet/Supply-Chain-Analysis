@@ -9,7 +9,11 @@ import numpy as np
 
 
 def bestSellingProducts(df):
-    st.title('Best Selling Products')
+    # st.title('Best Selling Products')
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
+            Best Selling Products
+        </h2>""",unsafe_allow_html=True)
+
     bestsellingproducts = df.groupby('product_name')['sales'].sum().reset_index().sort_values(by='sales',ascending=False).head(10)
     bestsellingproducts.rename(columns = {'product_name':'Product','sales':"Total Sales"},inplace=True)
     show_plot_9 = st.checkbox('Show Table  ')
@@ -18,24 +22,28 @@ def bestSellingProducts(df):
         fig_horizontal_bar = px.bar(bestsellingproducts, 
                            x='Total Sales', 
                            y='Product', 
-                           title='Best selling products',
+                        #    title='Best selling products',
                            orientation='h')
         st.plotly_chart(fig_horizontal_bar)
     else:
         st.table(bestsellingproducts)
 
 def bestSellingCategories(df):
-    st.title('Best Selling Categories')
+    # st.title('Best Selling Categories')
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
+            Best Selling Categories
+        </h2>""",unsafe_allow_html=True)
     bestsellingcategories = df.groupby(['category_name', 'product_name'])['sales'].sum().reset_index().sort_values(by='sales',ascending=False)
     top_categories = bestsellingcategories.groupby('category_name')['sales'].sum().reset_index().sort_values(by='sales', ascending=False).head(10)['category_name']
     bestsellingcategories = bestsellingcategories[bestsellingcategories['category_name'].isin(top_categories)]
+    bestsellingcategories.rename(columns={'category_name': 'Category', 'sales': 'Total Sales','product_name':"Product"}, inplace=True)
     show_plot_9 = st.checkbox('Show Table   ')
     if show_plot_9 == False:
         fig_horizontal_bar = px.bar(bestsellingcategories, 
-                            x='sales', 
-                            y='category_name',
-                            color= 'product_name',
-                            title='Best selling categories',
+                            x='Total Sales', 
+                            y='Category',
+                            color= 'Product',
+                            # title='Best selling categories',
                             orientation='h')
         #fig_horizontal_bar.update_layout(xaxis_type='log')
         st.plotly_chart(fig_horizontal_bar)
@@ -43,7 +51,10 @@ def bestSellingCategories(df):
         st.table(bestsellingcategories.head(10))
 
 def bestProductMargins(df):
-    st.title('Best Product Margins')
+    # st.title('Best Product Margins')
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
+            Best Products by Profit Margin
+        </h2>""",unsafe_allow_html=True)
     # Calculate order item profit
     df['order_item_profit'] = df['order_item_profit_ratio'] * df['sales']
     bestproductmargins = df.groupby('product_name')['order_item_profit'].mean().reset_index().sort_values(by='order_item_profit', ascending=False).head(7)
@@ -56,7 +67,7 @@ def bestProductMargins(df):
                                 y='Profit Margin', 
                                 size='Profit Margin',  # Use Profit Margin to determine the bubble size
                                 color='Product',       # Different colors for each product
-                                title='Top 5 Product Margins',
+                                # title='Top 5 Product Margins',
                                 hover_name='Product', 
                                 size_max=60)           # Maximum size of the bubbles
         # Hide x-axis labels
@@ -79,15 +90,19 @@ def categorize_discount_rate(df):
 
     return df
 
-# Scatter plot for discount and sales
 def discountVsSales(df):
-    st.title("Discount Sales Trend")
+    # st.title("Discount Sales Trend")
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
+            Discount Sales Trend
+        </h2>""",unsafe_allow_html=True)
+
     df = categorize_discount_rate(df)
     df = df.groupby('discount_category')['order_item_discount_rate'].count().reset_index()
+    df.rename(columns={'discount_category': 'Discount Rate (%)','order_item_discount_rate': "No. of Orders"}, inplace=True)
     fig_line = px.line(df, 
-                       x='discount_category', 
-                       y='order_item_discount_rate', 
-                       title='Count of Orders by Discount Category',
+                       x='Discount Rate (%)', 
+                       y="No. of Orders", 
+                    #    title='Count of Orders by Discount Category',
                        markers=True)  # markers=True to show points on the line
     
     st.plotly_chart(fig_line)
@@ -115,13 +130,16 @@ def discountVsSales(df):
 def priceprofit(df):
     correlation = df['product_price'].corr(df['product_profit'])
 
-    st.title("Correlation Analysis")
+    # st.title("Correlation Analysis")
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
+            Product Price VS Profit
+        </h2>""",unsafe_allow_html=True)
 
 
     st.markdown(
         f"""
         <div style="background-color:#f0f2f6; padding:20px; border-radius:10px; margin-bottom:20px; text-align:center;">
-            <h3 style="color:#4caf50;">Correlation Coefficient</h3>
+            <h3 style="color:#333;">Correlation Coefficient</h3>
             <p style="font-size:36px; font-weight:bold; color:#2196f3;">{correlation:.2f}</p>
         </div>
         """, 
@@ -133,8 +151,8 @@ def priceprofit(df):
 
 
     fig = px.scatter(df, x='product_price', y='product_profit', 
-                     title='Scatter Plot of Product Price vs Order Profit per Order',
-                     labels={'product_price': 'Product Price', 'product_profit': 'Order Profit per Order'},
+                    title='Price vs Profit',
+                     labels={'product_price': 'Product Price', 'product_profit': 'Order Profit'},
                      template="plotly_white",
                      )
     

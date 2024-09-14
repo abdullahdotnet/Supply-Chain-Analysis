@@ -12,7 +12,7 @@ def getSummary(df):
     # fig.update_layout(title='Payment Type Count', xaxis_title='Payment Type', yaxis_title='Count')
     # st.plotly_chart(fig)
 
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Marketwise Orders Distribution
         </h2>""",unsafe_allow_html=True)
     market_count = df['market'].value_counts()
@@ -20,7 +20,7 @@ def getSummary(df):
     fig.update_layout()
     st.plotly_chart(fig)
 
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Top Product Categories by Orders
         </h2>""",unsafe_allow_html=True)
     category_count = df['category_name'].value_counts().head(10)
@@ -34,7 +34,7 @@ def overallcards(df):
     st.write("")
     st.title("Business Overview Dashboard")
 
-    st.markdown(""" <h2 style="font-size: 34px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 34px; font-weight: bold; color: #31333f;">
             Key Metrics Summary
         </h2>""",unsafe_allow_html=True)
     totalcustomers = len(df['customer_id'].unique())
@@ -86,7 +86,7 @@ def overallcards(df):
 def orderStatusCount(df):
     st.write("")
     st.write("")
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Order Status Count
         </h2>""",unsafe_allow_html=True)
     order_status_count = df['order_status'].value_counts().reset_index()
@@ -95,7 +95,7 @@ def orderStatusCount(df):
 
 def salesTrend(df):
     st.write("")
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Sales Trend Over Time
         </h2>""",unsafe_allow_html=True)
     df['order_date'] = pd.to_datetime(df['order_date'])
@@ -105,7 +105,7 @@ def salesTrend(df):
 
 def productPriceByShippingMode(df):
     st.write("")
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Product Price by Shipping Mode
         </h2>""",unsafe_allow_html=True)
     fig = px.box(df, x='shipping_mode', y='order_item_product_price')
@@ -113,7 +113,7 @@ def productPriceByShippingMode(df):
 
 def paymentTypeDistribution(df):
     st.write("")
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Payment Type Distribution
         </h2>""",unsafe_allow_html=True)
     payment_type_count = df['payment_type'].value_counts().reset_index()

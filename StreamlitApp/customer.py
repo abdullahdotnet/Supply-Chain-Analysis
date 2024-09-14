@@ -12,7 +12,7 @@ def get_citywise(df):
     city_wise_customer.rename(columns={'order_city': 'City', 'customer_id': 'No. of Customers'}, inplace=True)
     city_wise_customer.reset_index(drop=True, inplace=True)
 
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             City wise Cutomers
         </h2>""",unsafe_allow_html=True)
     show_plot = st.checkbox('Show Plot')
@@ -59,7 +59,7 @@ def get_countrywise(df):
     country_list = list(df['customer_country'].unique())
     country_list.insert(0, 'Overall')
 
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Country wise Cutomers
         </h2>""",unsafe_allow_html=True)
     
@@ -121,7 +121,7 @@ def get_Statewise(df):
     State_list = list(df['customer_state'].unique())
     State_list.insert(0, 'Overall')
 
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             State wise Cutomers
         </h2>""",unsafe_allow_html=True)
     show_plot_1 = st.checkbox('Show Plot  ', value=True)
@@ -167,7 +167,7 @@ def get_segmentwise(df):
     
     # Cards
     variables = list(zip(segment_wise_customer['Segment'], segment_wise_customer['No. of Customers']))
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Segment wise Cutomers
         </h2>""",unsafe_allow_html=True)
     for i in range(0, len(variables), 3):
@@ -209,7 +209,7 @@ def get_segmentsales(df):
     salessegment['Total Profit ($)'] = salessegment['Total Profit'].apply(format_sales)
     salessegment['Profit Ratio (%)'] = round((salessegment['Total Profit'] / salessegment['Total Sales'])*100,2).astype(str)
     
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Segment wise Sales and Profit
         </h2>""",unsafe_allow_html=True)
     
@@ -238,7 +238,7 @@ def categoryPreferenceSegmentWise(df):
     #              size_max=60)
     # st.plotly_chart(fig)
 
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Top 5 Categories in Each Segment
         </h2>""",unsafe_allow_html=True)
     fig_treemap = px.treemap(top_5, 

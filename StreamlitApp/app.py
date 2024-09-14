@@ -47,6 +47,7 @@ if usermenu == 'Market':
     
 
 if usermenu == 'Product':
+    st.title("Product Analysis")
     pd.bestSellingProducts(df)
     pd.bestSellingCategories(df)
     pd.bestProductMargins(df)

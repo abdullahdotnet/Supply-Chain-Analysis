@@ -22,7 +22,7 @@ def get_marketsales(df):
     salesmarket['Total Profit ($)'] = salesmarket['Total Profit'].apply(format_sales)
     salesmarket['Profit Ratio (%)'] = round((salesmarket['Total Profit'] / salesmarket['Total Sales'])*100,2).astype(str)
 
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Market wise Sales and Profit
         </h2>""",unsafe_allow_html=True)
     show_plot_4 = st.checkbox('Show Plot      ')
@@ -68,7 +68,7 @@ def marketwisetrend(df):
     df['order_period'] = df['order_date'].dt.to_period('M')
     df['order_period_str'] = df['order_period'].astype(str)
 
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Market-Wise Monthly Sales
         </h2>""",unsafe_allow_html=True)
 
@@ -114,7 +114,7 @@ def marketwisetrend(df):
 
 def marketduration(df):
     marketwiseduration = df.groupby('market')['shipping_duration'].mean().reset_index()
-    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Average Shipping Duration by Market
         </h2>""",unsafe_allow_html=True)
 
