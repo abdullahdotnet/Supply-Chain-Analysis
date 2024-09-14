@@ -18,7 +18,9 @@ st.sidebar.title('Supply Chain Analysis')
 usermenu = st.sidebar.radio('Filters',('Summary','Customer','Market','Order','Product'))
 
 if usermenu == 'Summary':
+    sm.overallcards(df)
     sm.getSummary(df)
+    
     
 if usermenu == 'Customer':
     cs.get_segmentwise(df)
