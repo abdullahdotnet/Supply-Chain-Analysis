@@ -124,10 +124,10 @@ def get_Statewise(df):
     st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             State wise Cutomers
         </h2>""",unsafe_allow_html=True)
-    show_plot_1 = st.checkbox('Show Plot  ', value=True)
+    show_plot_1 = st.checkbox('Show Table  ')
 
 
-    if show_plot_1:
+    if not show_plot_1:
         page_size = 10
         total_pages = (len(state_wise_customer) // page_size) + 1
 

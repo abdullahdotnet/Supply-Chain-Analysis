@@ -58,9 +58,9 @@ def shippingmode(df):
     shippingmode.rename(columns = {'order_status':'Status','shipping_mode':'Shipping Mode','order_id':'Count'},inplace=True)
 
     
-    show_plot = st.checkbox('Show Plot',value=True)
+    show_plot = st.checkbox('Show Table')
 
-    if show_plot:
+    if not show_plot:
         fig = px.bar(shippingmode, x='Status', y='Count',color = 'Shipping Mode'
                     #  , title='Status by Shipping Mode'
                      )
