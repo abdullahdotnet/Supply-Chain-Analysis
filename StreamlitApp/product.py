@@ -31,7 +31,7 @@ def bestSellingProducts(df):
 def bestSellingCategories(df):
     # st.title('Best Selling Categories')
     st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
-            Best Selling Categories
+            Best Selling Product Categories
         </h2>""",unsafe_allow_html=True)
     bestsellingcategories = df.groupby(['category_name', 'product_name'])['sales'].sum().reset_index().sort_values(by='sales',ascending=False)
     top_categories = bestsellingcategories.groupby('category_name')['sales'].sum().reset_index().sort_values(by='sales', ascending=False).head(10)['category_name']
@@ -95,7 +95,7 @@ def discountVsSales(df):
     st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Discount Sales Trend
         </h2>""",unsafe_allow_html=True)
-
+    st.write("There seems to be no clear relationship between discount rate and sales volume.")
     df = categorize_discount_rate(df)
     df = df.groupby('discount_category')['order_item_discount_rate'].count().reset_index()
     df.rename(columns={'discount_category': 'Discount Rate (%)','order_item_discount_rate': "No. of Orders"}, inplace=True)
@@ -140,14 +140,14 @@ def priceprofit(df):
         f"""
         <div style="background-color:#f0f2f6; padding:20px; border-radius:10px; margin-bottom:20px; text-align:center;">
             <h3 style="color:#333;">Correlation Coefficient</h3>
-            <p style="font-size:36px; font-weight:bold; color:#2196f3;">{correlation:.2f}</p>
+            <p style="font-size:36px; font-weight:bold; color: #636efa;">{correlation:.2f}</p>
         </div>
         """, 
         unsafe_allow_html=True
     )
 
     st.subheader("Scatter Plot of Product Price vs Order Profit")
-    st.write("This scatter plot shows the relationship between product price and order profit per order.")
+    st.write("Ther is significant positive correlation between Product Price and Order Profit.")
 
 
     fig = px.scatter(df, x='product_price', y='product_profit', 

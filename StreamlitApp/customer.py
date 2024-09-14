@@ -108,7 +108,7 @@ def get_countrywise(df):
         start_idx = (page - 1) * page_size
         end_idx = start_idx + page_size
         st.table(country_wise_customer.iloc[start_idx:end_idx])
-
+    st.write("Most of the customers belongs to North American and European countries.")
 
 
 def get_Statewise(df):
@@ -180,7 +180,7 @@ def get_segmentwise(df):
                     f"""
                     <div style="background-color:#f0f2f6; padding:20px; border-radius:10px; margin-bottom:20px; text-align:center; box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);">
                         <h3 style="color:#333;">{title}</h3>
-                        <p style="font-size:24px; font-weight:bold; color:#2196f3;">{value}</p>
+                        <p style="font-size:24px; font-weight:bold; color: #636efa;">{value}</p>
                     </div>
                     """, 
                     unsafe_allow_html=True
@@ -241,6 +241,7 @@ def categoryPreferenceSegmentWise(df):
     st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Top 5 Categories in Each Segment
         </h2>""",unsafe_allow_html=True)
+    st.write("Treemap shows that in all types of customers, the most preferred categories are Shoes and Clothing.")
     fig_treemap = px.treemap(top_5, 
                         path=['Segment', 'Category'], 
                         values='Count', 

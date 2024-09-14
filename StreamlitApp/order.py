@@ -46,8 +46,8 @@ def daywiseorder(df):
         st.plotly_chart(fig)
 
     else:
-        
         st.table(orderdaywise)
+    st.write("Number of Orders increase as the weekend approaches.")
 
 
 def shippingmode(df):
@@ -127,7 +127,7 @@ def averageshippingdelay(df):
                     f"""
                     <div class="small-card">
                         <h3>{shipping_mode}</h3>
-                        <p style="font-size:24px; font-weight:bold; color:#2196f3;">{avg_duration:.2f} days</p>
+                        <p style="font-size:24px; font-weight:bold; color: #636efa;">{avg_duration:.2f} days</p>
                     </div>
                     """, 
                     unsafe_allow_html=True
@@ -142,7 +142,7 @@ def shipdurationdistribution(df):
     st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Shipping Duration Distribution
         </h2>""",unsafe_allow_html=True)
-    
+    st.write("Most of the orders are taking 8 to 10 days to deliver.")
 
     fig = px.histogram(df, x='shipping_duration', nbins=6, 
                 #    title='Shipping Duration Distribution',
@@ -160,16 +160,18 @@ def shipdurationdistribution(df):
     st.plotly_chart(fig)
 
 
+
 def shipdurationbymode(df):
     st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Shipping Duration by Shipping Mode
         </h2>""",unsafe_allow_html=True)
+    st.write("First and Second class are delivering orders in time. While Same Day is facing some issues and showing exceptions in delivery time.")
     fig = px.box(df, x='shipping_mode', y='shipping_duration',
             #  title='Shipping Duration by Shipping Mode',
              labels={'shipping_duration': 'Shipping Duration (days)', 'shipping_mode': 'Shipping Mode'},
              color='shipping_mode')
 
-# Customize the layout for better appearance
+    # Customize the layout for better appearance
     fig.update_layout(
         xaxis_title='Shipping Mode',
         yaxis_title='Shipping Duration (days)',

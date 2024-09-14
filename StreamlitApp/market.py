@@ -28,12 +28,13 @@ def get_marketsales(df):
     show_plot_4 = st.checkbox('Show Plot      ')
 
     if show_plot_4:
-        fig = px.bar(salesmarket, x='Market', y=['Total Sales','Total Profit'], title='Total sales by Market')
+        fig = px.bar(salesmarket, x='Market', y=['Total Sales','Total Profit'])
         fig.update_layout(barmode='group')
         st.plotly_chart(fig)
     else:
         salesmarket = salesmarket[['Market','Total Sales ($)','Total Profit ($)','Profit Ratio (%)']]
         st.table(salesmarket)
+    st.write("Markets with more sales are producing more profit. But Africa has the highest profit ratio.")
 
 def mapforprofit(df):
     indextodrop = df[df['order_profit_per_order'] < 0 ].index
@@ -46,9 +47,9 @@ def mapforprofit(df):
     # color_continuous_scale='RdYlGn',     # Cyclic color scale from red to green
     labels={'order_profit_per_order': 'Profit Amount'},
     title='Profit Amount per Country'
-)
+    )
 
-# Update layout for a dark mode style
+    # Update layout for a dark mode style
     fig.update_layout(
         geo=dict(
             bgcolor='white',                 # Background color of the map
@@ -111,6 +112,8 @@ def marketwisetrend(df):
 
     # Display the plot using Streamlit
     st.plotly_chart(fig_line_plot)
+    st.write("""The spikes shows that if they focus on one market then sales for all the other markets are dropped. 
+            It might show they have insufficient resources to manage all the markets at the same time.""")
 
 def marketduration(df):
     marketwiseduration = df.groupby('market')['shipping_duration'].mean().reset_index()
@@ -184,7 +187,7 @@ def marketduration(df):
             f"""
             <div class="big-card">
                 <h3>{marketwiseduration.iloc[0]['market']}</h3>
-                <p style="font-size:24px; font-weight:bold; color:#2196f3;">{marketwiseduration.iloc[0]['shipping_duration']:.2f} days</p>
+                <p style="font-size:24px; font-weight:bold; color: #636efa;">{marketwiseduration.iloc[0]['shipping_duration']:.2f} days</p>
             </div>
             """,
             unsafe_allow_html=True
@@ -205,7 +208,7 @@ def marketduration(df):
                         f"""
                         <div class="small-card">
                             <h3>{market}</h3>
-                            <p style="font-size:20px; font-weight:bold; color:#2196f3;">{duration:.2f} days</p>
+                            <p style="font-size:20px; font-weight:bold; color: #636efa;">{duration:.2f} days</p>
                         </div>
                         """, 
                         unsafe_allow_html=True

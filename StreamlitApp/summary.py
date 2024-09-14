@@ -15,6 +15,7 @@ def getSummary(df):
     st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Marketwise Orders Distribution
         </h2>""",unsafe_allow_html=True)
+    st.write("Most of the Orders are placed from EUrope and LATAM (a group of 33 countries in Latin America and the Caribbean).")
     market_count = df['market'].value_counts()
     fig = go.Figure([go.Pie(labels=market_count.index, values=market_count.values)])
     fig.update_layout()
@@ -23,6 +24,7 @@ def getSummary(df):
     st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Top Product Categories by Orders
         </h2>""",unsafe_allow_html=True)
+    st.write("Most of the Orders are placed for Shoes and Women's Clothing.")
     category_count = df['category_name'].value_counts().head(10)
     fig = go.Figure([go.Bar(x=category_count.index, y=category_count.values)])
     fig.update_layout(xaxis_title='Category', yaxis_title='Count')
@@ -65,7 +67,7 @@ def overallcards(df):
                     f"""
                     <div style="background-color:#f0f2f6; padding:20px; border-radius:10px; margin-bottom:20px; text-align:center; box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);">
                         <h3 style="color:#333;">{title}</h3>
-                        <p style="font-size:24px; font-weight:bold; color:#2196f3;">{value}</p>
+                        <p style="font-size:24px; font-weight:bold; color: #636efa;">{value}</p>
                     </div>
                     """, 
                     unsafe_allow_html=True
@@ -89,6 +91,7 @@ def orderStatusCount(df):
     st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Order Status Count
         </h2>""",unsafe_allow_html=True)
+    st.write("Most of the Orders are completed successfully.")
     order_status_count = df['order_status'].value_counts().reset_index()
     fig = px.bar(order_status_count, x='count', y='order_status')
     st.plotly_chart(fig)
@@ -98,6 +101,7 @@ def salesTrend(df):
     st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Sales Trend Over Time
         </h2>""",unsafe_allow_html=True)
+    st.write("The sales increase in summer but not increasing during the overall number of years.")
     df['order_date'] = pd.to_datetime(df['order_date'])
     sales_trend = df.groupby('order_date')['sales'].sum().reset_index()
     fig = px.line(sales_trend, x='order_date', y='sales')
@@ -108,6 +112,7 @@ def productPriceByShippingMode(df):
     st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
             Product Price by Shipping Mode
         </h2>""",unsafe_allow_html=True)
+    st.write("There is no significant difference in product price based on shipping mode.")
     fig = px.box(df, x='shipping_mode', y='order_item_product_price')
     st.plotly_chart(fig)
 

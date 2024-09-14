@@ -11,11 +11,17 @@ import market as mr
 import product as pd
 import order as od
 
+# Applying Plotly theme
+import plotly.io as pio
+pio.templates.default = 'plotly_white'
+# pio.templates.default =  'none'
+
+
 df = pr.preprocess()
 
 st.sidebar.title('Supply Chain Analysis')
 
-usermenu = st.sidebar.radio('Filters',('Summary','Customer','Market','Order','Product'))
+usermenu = st.sidebar.radio('Sections',('Summary','Customer','Market','Order','Product'))
 
 if usermenu == 'Summary':
     sm.overallcards(df)
@@ -41,8 +47,6 @@ if usermenu == 'Market':
     mr.get_marketsales(df)
     # mr.daywiseorder(df)
     # mr.mapforprofit(df)
-    # pd.bestSellingProducts(df)
-    # pd.bestSellingCategories(df)
     mr.marketduration(df)
     
 
