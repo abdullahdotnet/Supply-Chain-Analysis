@@ -7,15 +7,14 @@ import plotly.graph_objects as go
 import numpy as np
 
 def get_citywise(df):
-
+    st.write("")
     city_wise_customer = df.groupby('order_city')['customer_id'].count().reset_index().sort_values(by='customer_id', ascending=False)
     city_wise_customer.rename(columns={'order_city': 'City', 'customer_id': 'No. of Customers'}, inplace=True)
-
     city_wise_customer.reset_index(drop=True, inplace=True)
 
-   
-
-    st.title('City wise Cutomers')
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+            City wise Cutomers
+        </h2>""",unsafe_allow_html=True)
     show_plot = st.checkbox('Show Plot')
 
 
@@ -28,7 +27,7 @@ def get_citywise(df):
         start_idx = (page - 1) * page_size
         end_idx = start_idx + page_size
 
-        fig = px.bar(city_wise_customer.iloc[start_idx:end_idx], x='City', y='No. of Customers', title='Number of Customers by City')
+        fig = px.bar(city_wise_customer.iloc[start_idx:end_idx], x='City', y='No. of Customers')
         # fig.update_layout(yaxis_type='log')
         st.plotly_chart(fig)
 
@@ -51,7 +50,7 @@ def get_citywise(df):
 
 
 def get_countrywise(df):
-
+    st.write("")
     country_wise_customer = df.groupby('order_country')['customer_id'].count().reset_index().sort_values(by='customer_id', ascending=False)
     country_wise_customer.rename(columns={'order_country': 'Country', 'customer_id': 'No. of Customers'}, inplace=True)
 
@@ -60,7 +59,10 @@ def get_countrywise(df):
     country_list = list(df['customer_country'].unique())
     country_list.insert(0, 'Overall')
 
-    st.title('Country wise Cutomers')
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+            Country wise Cutomers
+        </h2>""",unsafe_allow_html=True)
+    
     show_plot_1 = st.checkbox('Show Plot ')
 
 
@@ -84,7 +86,7 @@ def get_countrywise(df):
         fig_horizontal_bar = px.bar(final_df_sorted, 
                            x='No. of Customers', 
                            y='Country', 
-                           title='Number of Customers by Country (Top 18 + Other)',
+                        #    title='Number of Customers by Country (Top 18 + Other)',
                            orientation='h')
 
 # Show the plot
@@ -110,7 +112,7 @@ def get_countrywise(df):
 
 
 def get_Statewise(df):
-
+    st.write("")
     state_wise_customer = df.groupby('order_state')['customer_id'].count().reset_index().sort_values(by='customer_id', ascending=False)
     state_wise_customer.rename(columns={'order_state': 'State', 'customer_id': 'No. of Customers'}, inplace=True)
 
@@ -119,8 +121,10 @@ def get_Statewise(df):
     State_list = list(df['customer_state'].unique())
     State_list.insert(0, 'Overall')
 
-    st.title('State wise Cutomers')
-    show_plot_1 = st.checkbox('Show Plot  ')
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+            State wise Cutomers
+        </h2>""",unsafe_allow_html=True)
+    show_plot_1 = st.checkbox('Show Plot  ', value=True)
 
 
     if show_plot_1:
@@ -131,7 +135,9 @@ def get_Statewise(df):
 
         start_idx = (page - 1) * page_size
         end_idx = start_idx + page_size
-        fig = px.bar(state_wise_customer.iloc[start_idx:end_idx], x='State', y='No. of Customers', title='Number of Customers by State')
+        fig = px.bar(state_wise_customer.iloc[start_idx:end_idx], x='State', y='No. of Customers', 
+                    #  title='Number of Customers by State'
+                     )
         st.plotly_chart(fig)
 
     else:
@@ -154,21 +160,39 @@ def get_Statewise(df):
 
 
 def get_segmentwise(df):
+    st.write("")
     segment_wise_customer = df.groupby('customer_segment')['customer_id'].count().reset_index().sort_values(by='customer_id', ascending=False)
     segment_wise_customer.rename(columns={'customer_segment': 'Segment', 'customer_id': 'No. of Customers'}, inplace=True)
     segment_wise_customer.reset_index(drop=True, inplace=True)
-
-
-    st.subheader('Segment wise Cutomers')
-    show_plot_2 = st.checkbox('Show Plot    ',value=True)
-
-
-    if show_plot_2:
-        fig = px.pie(segment_wise_customer, names='Segment', values='No. of Customers', hole=0.4)
-        st.plotly_chart(fig)
-
-    else:
-        st.table(segment_wise_customer)
+    
+    # Cards
+    variables = list(zip(segment_wise_customer['Segment'], segment_wise_customer['No. of Customers']))
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+            Segment wise Cutomers
+        </h2>""",unsafe_allow_html=True)
+    for i in range(0, len(variables), 3):
+        cols = st.columns(3)
+        for j in range(3):
+            if i + j < len(variables):
+                title, value = variables[i + j]
+                
+                cols[j].markdown(
+                    f"""
+                    <div style="background-color:#f0f2f6; padding:20px; border-radius:10px; margin-bottom:20px; text-align:center; box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);">
+                        <h3 style="color:#333;">{title}</h3>
+                        <p style="font-size:24px; font-weight:bold; color:#2196f3;">{value}</p>
+                    </div>
+                    """, 
+                    unsafe_allow_html=True
+                )
+    # code for showing pie plot instead of cards.
+    # st.subheader('Segment wise Cutomers')
+    # show_plot_2 = st.checkbox('Show Plot    ',value=True)
+    # if show_plot_2:
+    #     fig = px.pie(segment_wise_customer, names='Segment', values='No. of Customers', hole=0.4)
+    #     st.plotly_chart(fig)
+    # else:
+    #     st.table(segment_wise_customer)
 
 
 def format_sales(value):
@@ -178,12 +202,17 @@ def format_sales(value):
         return f'{value / 1_000:.2f}K'
     
 def get_segmentsales(df):
+    st.write("")
     salessegment = df.groupby('customer_segment')[['sales','order_profit_per_order']].sum().reset_index().sort_values(by='sales',ascending=False)
     salessegment.rename(columns={'customer_segment': 'Segment','sales':"Total Sales",'order_profit_per_order':'Total Profit'},inplace=True)
     salessegment['Total Sales ($)'] = salessegment['Total Sales'].apply(format_sales)
     salessegment['Total Profit ($)'] = salessegment['Total Profit'].apply(format_sales)
     salessegment['Profit Ratio (%)'] = round((salessegment['Total Profit'] / salessegment['Total Sales'])*100,2).astype(str)
-    st.title('Segment wise Sales and Profit')
+    
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+            Segment wise Sales and Profit
+        </h2>""",unsafe_allow_html=True)
+    
     show_plot_3 = st.checkbox('Show Plot     ')
 
     if show_plot_3:
@@ -195,6 +224,7 @@ def get_segmentsales(df):
         st.table(salessegment)
 
 def categoryPreferenceSegmentWise(df):
+    st.write("")
     categorysegment = df.groupby(['customer_segment','category_name'])['order_id'].count().reset_index()
     categorysegment = categorysegment.rename(columns={'category_name':'Category','customer_segment':'Segment','order_id': 'Count'})
     df_sorted = categorysegment.sort_values('Count', ascending= False)
@@ -207,11 +237,16 @@ def categoryPreferenceSegmentWise(df):
     #              title='Bubble Chart of Category Counts by Customer Segment', 
     #              size_max=60)
     # st.plotly_chart(fig)
+
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+            Top 5 Categories in Each Segment
+        </h2>""",unsafe_allow_html=True)
     fig_treemap = px.treemap(top_5, 
                         path=['Segment', 'Category'], 
                         values='Count', 
-                        title='Treemap of Top 5 Categories by Customer Segment')
-    fig_treemap.update_traces(textinfo='label+text')
+                        # title='Treemap of Top 5 Categories by Customer Segment'
+                        )
+    fig_treemap.update_traces(textinfo='label+value')
 
     # Show the plot
     st.plotly_chart(fig_treemap)

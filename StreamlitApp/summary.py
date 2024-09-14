@@ -12,13 +12,17 @@ def getSummary(df):
     # fig.update_layout(title='Payment Type Count', xaxis_title='Payment Type', yaxis_title='Count')
     # st.plotly_chart(fig)
 
-    st.subheader("Marketwise Orders Distribution")
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+            Marketwise Orders Distribution
+        </h2>""",unsafe_allow_html=True)
     market_count = df['market'].value_counts()
     fig = go.Figure([go.Pie(labels=market_count.index, values=market_count.values)])
     fig.update_layout()
     st.plotly_chart(fig)
 
-    st.subheader("Top Product Categories by Orders")
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+            Top Product Categories by Orders
+        </h2>""",unsafe_allow_html=True)
     category_count = df['category_name'].value_counts().head(10)
     fig = go.Figure([go.Bar(x=category_count.index, y=category_count.values)])
     fig.update_layout(xaxis_title='Category', yaxis_title='Count')
@@ -27,8 +31,12 @@ def getSummary(df):
 
 
 def overallcards(df):
+    st.write("")
     st.title("Business Overview Dashboard")
-    st.header("Key Metrics Summary")
+
+    st.markdown(""" <h2 style="font-size: 34px; font-weight: bold; color: black;">
+            Key Metrics Summary
+        </h2>""",unsafe_allow_html=True)
     totalcustomers = len(df['customer_id'].unique())
     totalorders = len(df)
     totalsales = df['sales'].sum() / 1_000_000  # Convert to millions
@@ -76,25 +84,38 @@ def overallcards(df):
 
 
 def orderStatusCount(df):
-    st.subheader("Order Status Count")
+    st.write("")
+    st.write("")
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+            Order Status Count
+        </h2>""",unsafe_allow_html=True)
     order_status_count = df['order_status'].value_counts().reset_index()
     fig = px.bar(order_status_count, x='count', y='order_status')
     st.plotly_chart(fig)
 
 def salesTrend(df):
-    st.subheader("Sales Trend Over Time")
+    st.write("")
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+            Sales Trend Over Time
+        </h2>""",unsafe_allow_html=True)
     df['order_date'] = pd.to_datetime(df['order_date'])
     sales_trend = df.groupby('order_date')['sales'].sum().reset_index()
     fig = px.line(sales_trend, x='order_date', y='sales')
     st.plotly_chart(fig)
 
 def productPriceByShippingMode(df):
-    st.subheader("Product Price by Shipping Mode")
+    st.write("")
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+            Product Price by Shipping Mode
+        </h2>""",unsafe_allow_html=True)
     fig = px.box(df, x='shipping_mode', y='order_item_product_price')
     st.plotly_chart(fig)
 
 def paymentTypeDistribution(df):
-    st.subheader("Payment Type Distribution")
+    st.write("")
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: black;">
+            Payment Type Distribution
+        </h2>""",unsafe_allow_html=True)
     payment_type_count = df['payment_type'].value_counts().reset_index()
     fig = px.pie(payment_type_count, values='count', names='payment_type')
     st.plotly_chart(fig)
