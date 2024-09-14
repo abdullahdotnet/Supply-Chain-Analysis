@@ -36,10 +36,11 @@ if usermenu == 'Customer':
     
 
 if usermenu == 'Market':
+    st.title("Market Analysis")
     mr.marketwisetrend(df)
     mr.get_marketsales(df)
     # mr.daywiseorder(df)
-    #mr.mapforprofit(df)
+    # mr.mapforprofit(df)
     # pd.bestSellingProducts(df)
     # pd.bestSellingCategories(df)
     mr.marketduration(df)
@@ -54,6 +55,7 @@ if usermenu == 'Product':
     pd.priceprofit(df)
 
 if usermenu == 'Order':
+    st.title("Order Analysis")
     od.daywiseorder(df)
     od.shippingmode(df)
     od.averageshippingdelay(df)

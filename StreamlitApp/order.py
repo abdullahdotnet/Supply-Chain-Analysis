@@ -8,8 +8,10 @@ import numpy as np
 
 
 def daywiseorder(df):
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
+            Day wise order counts
+        </h2>""",unsafe_allow_html=True)
     
-    st.title('Weekday wise order')
     
     orderdaywise = df.groupby('order_weekday')['order_id'].count().reset_index()
     weekday_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -40,7 +42,7 @@ def daywiseorder(df):
     #     )
     #     st.plotly_chart(fig_line_plot)
 
-        fig = px.bar(orderdaywise, x='Day', y='No. of Orders', title='Number of Orders by Day')
+        fig = px.bar(orderdaywise, x='Day', y='No. of Orders')
         st.plotly_chart(fig)
 
     else:
@@ -49,7 +51,9 @@ def daywiseorder(df):
 
 
 def shippingmode(df):
-    st.title('Order status')
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
+            Order Status by Shipping Modes
+        </h2>""",unsafe_allow_html=True)
     shippingmode = df.groupby(['order_status','shipping_mode'])['order_id'].count().reset_index()
     shippingmode.rename(columns = {'order_status':'Status','shipping_mode':'Shipping Mode','order_id':'Count'},inplace=True)
 
@@ -57,7 +61,9 @@ def shippingmode(df):
     show_plot = st.checkbox('Show Plot',value=True)
 
     if show_plot:
-        fig = px.bar(shippingmode, x='Status', y='Count',color = 'Shipping Mode', title='Status by Shipping Mode')
+        fig = px.bar(shippingmode, x='Status', y='Count',color = 'Shipping Mode'
+                    #  , title='Status by Shipping Mode'
+                     )
         st.plotly_chart(fig)
     else:
         shippingmodelist = list(df['shipping_mode'].unique())
@@ -84,11 +90,29 @@ def shippingmode(df):
 
 def averageshippingdelay(df):
     average_duration = df.groupby('shipping_mode')['shipping_duration'].mean().reset_index()
-    st.title("Average Shipping Duration by Shipping Mode")
 
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
+            Average Shipping Duration by Shipping Mode
+        </h2>""",unsafe_allow_html=True)
+
+    # Custom CSS for consistent card styling
+    st.markdown("""
+        <style>
+        .small-card {
+            background-color:#f0f2f6; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            text-align:center; 
+            box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
+    # Display the cards in rows of 2
     with st.container():
-        cols = st.columns(2)  # Create 2 columns
-
+        cols = st.columns(2)  # Create 2 columns per row
+        
         # Loop through each shipping mode and display it as a card
         for index, row in average_duration.iterrows():
             shipping_mode = row['shipping_mode']
@@ -96,22 +120,32 @@ def averageshippingdelay(df):
             
             # Determine which column to place the card in
             col_index = index % 2
+            
+            # Place the card in the appropriate column
             with cols[col_index]:
                 st.markdown(
                     f"""
-                    <div style="background-color:#f0f2f6; padding:20px; border-radius:10px; margin-bottom:20px;">
-                        <h3 style="color:#333;">{shipping_mode}</h3>
-                        <p style="font-size:24px; font-weight:bold; color:#4CAF50;">{avg_duration:.2f} days</p>
+                    <div class="small-card">
+                        <h3>{shipping_mode}</h3>
+                        <p style="font-size:24px; font-weight:bold; color:#2196f3;">{avg_duration:.2f} days</p>
                     </div>
                     """, 
                     unsafe_allow_html=True
                 )
 
+            # Create new columns for every new row after two cards
+            if (index + 1) % 2 == 0:
+                cols = st.columns(2)
 def shipdurationdistribution(df):
 
-    st.title('Ship Duration Distribution')
+    # st.title('Ship Duration Distribution')
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
+            Shipping Duration Distribution
+        </h2>""",unsafe_allow_html=True)
+    
+
     fig = px.histogram(df, x='shipping_duration', nbins=6, 
-                   title='Shipping Duration Distribution',
+                #    title='Shipping Duration Distribution',
                    labels={'shipping_duration': 'Shipping Duration (days)'},
                    color_discrete_sequence=['skyblue'])
 
@@ -127,8 +161,11 @@ def shipdurationdistribution(df):
 
 
 def shipdurationbymode(df):
+    st.markdown(""" <h2 style="font-size: 32px; font-weight: bold; color: #31333f;">
+            Shipping Duration by Shipping Mode
+        </h2>""",unsafe_allow_html=True)
     fig = px.box(df, x='shipping_mode', y='shipping_duration',
-             title='Shipping Duration by Shipping Mode',
+            #  title='Shipping Duration by Shipping Mode',
              labels={'shipping_duration': 'Shipping Duration (days)', 'shipping_mode': 'Shipping Mode'},
              color='shipping_mode')
 
