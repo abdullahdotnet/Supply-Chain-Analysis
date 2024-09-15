@@ -65,6 +65,7 @@ Once the app is running, navigate through the sidebar to explore the different s
 This project was developed by the following team members: 
  - [Muhammad Abdullah Ghazi](http://github.com/abdullahdotnet)
  - [Muhammad Zubair](http://github.com/zubayr-ahmad)
+
 Both of us actively contributed to every aspect of the project, from data analysis to design and deployment, ensuring a seamless and comprehensive solution.
 
 Feel free to reach out to us for any queries or suggestions!
