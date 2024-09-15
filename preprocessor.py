@@ -78,7 +78,7 @@ def preprocess():
     # uploaded_file = st.file_uploader("Upload data.csv", type="csv")
     # if uploaded_file is not None:
     # providing raw GitHub file path
-    df = pd.read_csv('https://raw.githubusercontent.com/zubayr-ahmad/Supply-Chain-Analysis/main/data.csv')
+    df = pd.read_csv('data.csv')
 
     drop = df[df['customer_state'] == '91732'].index
     df.drop(drop)
