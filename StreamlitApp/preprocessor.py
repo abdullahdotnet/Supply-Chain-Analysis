@@ -77,7 +77,8 @@ def calculate_product_profit(df):
 def preprocess():
     # uploaded_file = st.file_uploader("Upload data.csv", type="csv")
     # if uploaded_file is not None:
-    df = pd.read_csv('data.csv')
+    # providing raw GitHub file path
+    df = pd.read_csv('https://raw.githubusercontent.com/zubayr-ahmad/Supply-Chain-Analysis/main/StreamlitApp/data.csv')
 
     drop = df[df['customer_state'] == '91732'].index
     df.drop(drop)
