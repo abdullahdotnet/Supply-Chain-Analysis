@@ -75,9 +75,9 @@ def calculate_product_profit(df):
 
 
 def preprocess():
-    uploaded_file = st.file_uploader("Upload data.csv", type="csv")
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
+    # uploaded_file = st.file_uploader("Upload data.csv", type="csv")
+    # if uploaded_file is not None:
+    df = pd.read_csv('data.csv')
 
     drop = df[df['customer_state'] == '91732'].index
     df.drop(drop)
