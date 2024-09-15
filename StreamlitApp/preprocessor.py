@@ -74,7 +74,7 @@ def calculate_product_profit(df):
 
 
 def preprocess():
-    df = pd.read_csv('../data.csv')
+    df = pd.read_csv('data.csv')
     drop = df[df['customer_state'] == '91732'].index
     df.drop(drop)
     df['order_date'] = pd.to_datetime(df['order_date'], utc=True)
