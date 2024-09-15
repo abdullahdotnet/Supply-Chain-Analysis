@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from datetime import timedelta
+import streamlit as st
 
 def update_delivery_date(row):
     # Set default days to add
@@ -74,7 +75,10 @@ def calculate_product_profit(df):
 
 
 def preprocess():
-    df = pd.read_csv('data.csv')
+    uploaded_file = st.file_uploader("Upload data.csv", type="csv")
+    if uploaded_file is not None:
+        df = pd.read_csv(uploaded_file)
+
     drop = df[df['customer_state'] == '91732'].index
     df.drop(drop)
     df['order_date'] = pd.to_datetime(df['order_date'], utc=True)
