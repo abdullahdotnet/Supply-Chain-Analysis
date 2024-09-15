@@ -42,7 +42,7 @@ if usermenu == 'Market':
     mr.marketwisetrend(df)
     mr.get_marketsales(df)
     # mr.daywiseorder(df)
-    mr.mapforprofit(df)
+    # mr.mapforprofit(df)
     mr.marketduration(df)
     
 
