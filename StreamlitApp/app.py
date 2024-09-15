@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 import summary as sm
 import customer as cs
 import preprocessor as pr
