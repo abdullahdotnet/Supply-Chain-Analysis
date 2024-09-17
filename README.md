@@ -1,11 +1,18 @@
 # Supply Chain Analysis WebApp
 
 ## Prodect Overview
-This project is a comprehensive **Supply Chain Analysis Dashboard** built using **Streamlit**. You can visit the live website over here: [supplyinsights.com](https://supplyinsights.streamlitapp.com). 
+This project is a comprehensive **Supply Chain Analysis Dashboard** built using **Streamlit**.
+The project provides detailed insights into various key areas such as **Customers**, **Orders**, **Products**, **Markets**, and **General Metrics**. The analysis includes visualizations, tables, and interactive filters for enhanced data exploration.
+
+## Demo  
+You can visit the live website over here: [supplyinsights.com](https://supplyinsights.streamlitapp.com).   
+
+### Video Demo
+Supply Chain Analysis using Streamlit
+[![Supply Chain Analysis with Streamlit](https://github.com/user-attachments/assets/34af6792-bbfe-4f84-a390-c42f7d2bbac2)](https://www.youtube.com/watch?v=lblLaRVmSa8)
 
 The dataset used for this project can be found over [here](https://www.kaggle.com/datasets/pushpitkamboj/logistics-data-containing-real-world-data).
 
-The project provides detailed insights into various key areas such as **Customers**, **Orders**, **Products**, **Markets**, and **General Metrics**. The analysis includes visualizations, tables, and interactive filters for enhanced data exploration.
 
 ## Table of Contents
  - [Visualizations](#visualizations)
